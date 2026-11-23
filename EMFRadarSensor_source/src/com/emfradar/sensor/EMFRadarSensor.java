@@ -16,8 +16,14 @@ import com.google.appinventor.components.runtime.EventDispatcher;
 import com.google.appinventor.components.runtime.OnDestroyListener;
 import com.google.appinventor.components.annotations.Extension;
 
-@DesignerComponent(version = 1, description = "Magnetometer for EMF Radar 360. Values in microtesla.",
-    category = ComponentCategory.EXTENSION, nonVisible = true, iconName = "")
+@Extension
+@DesignerComponent(
+    version = 1,
+    description = "Magnetometer for EMF Radar 360. Values in microtesla.",
+    category = ComponentCategory.EXTENSION,
+    nonVisible = true,
+    iconName = ""
+)
 public class EMFRadarSensor extends AndroidNonvisibleComponent implements SensorEventListener, OnDestroyListener {
   private final SensorManager manager;
   private final Sensor magnetometer;
