@@ -14,6 +14,7 @@ import com.google.appinventor.components.runtime.AndroidNonvisibleComponent;
 import com.google.appinventor.components.runtime.ComponentContainer;
 import com.google.appinventor.components.runtime.EventDispatcher;
 import com.google.appinventor.components.runtime.OnDestroyListener;
+import com.google.appinventor.components.annotations.Extension;
 
 @DesignerComponent(version = 1, description = "Magnetometer for EMF Radar 360. Values in microtesla.",
     category = ComponentCategory.EXTENSION, nonVisible = true, iconName = "")
