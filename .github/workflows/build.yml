@@ -1,0 +1,25 @@
+name: EMF Radar Sensor Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show project files
+        run: |
+          echo "EMF Radar 360 - Project structure"
+          find . -maxdepth 6 -type f | sort
+
+      - name: Check Java source files
+        run: |
+          echo "Java source files:"
+          find . -name "*.java" -type f
