@@ -1,4 +1,4 @@
-name: EMF Radar Sensor Build
+name: Build EMFRadarSensor with Rush 2
 
 on:
   workflow_dispatch:
@@ -6,20 +6,47 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
-  inspect:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show project files
-        run: |
-          echo "EMF Radar 360 - Project structure"
-          find . -maxdepth 6 -type f | sort
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-      - name: Check Java source files
+      - name: Prepare Java source
+        shell: bash
         run: |
-          echo "Java source files:"
-          find . -name "*.java" -type f
+          set -euo pipefail
+          mkdir -p src/com/emfradar/sensor
+          cp EMFRadarSensor_source/src/com/emfradar/sensor/EMFRadarSensor.java src/com/emfradar/sensor/
+          test -s src/com/emfradar/sensor/EMFRadarSensor.java
+          echo "EMF sensor source prepared"
+
+      - name: Install Rush
+        uses: shreyashsaitwal/rush-cli@v2
+        with:
+          version: 2.1.2
+
+      - name: Resolve dependencies
+        run: rush deps sync
+
+      - name: Build EMF extension
+        run: rush build
+
+      - name: Upload AIX artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: EMFRadarSensor-Rush2-build
+          path: out/
+          if-no-files-found: warn
